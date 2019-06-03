@@ -6,6 +6,7 @@ import android.os.IBinder;
 import android.util.Log;
 
 public class MyService1 extends Service {
+    private String TAG = "sanbo.plugin.s1";
     public MyService1() {
     }
 
@@ -17,18 +18,18 @@ public class MyService1 extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.e("baobao", "Service is created");
+        Log.e(TAG, "Service is created");
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.e("baobao", "Service is started");
+        Log.e(TAG, "Service is started");
         return START_STICKY;
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.e("baobao", "Service is Destroy");
+        Log.e(TAG, "Service is Destroy");
     }
 }

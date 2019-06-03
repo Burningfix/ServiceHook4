@@ -20,7 +20,7 @@ import jianqiang.com.activityhook1.classloder_hook.BaseDexClassLoaderHookHelper;
 
 public class MainActivity extends Activity {
 
-    private static final String TAG = "MainActivity";
+    private static final String TAG = "sanbo.Main";
 
     private static final String apkName = "testservice1.apk";
 
@@ -59,7 +59,7 @@ public class MainActivity extends Activity {
         conn = new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName name, IBinder service) {
-                Log.d("baobao", "onServiceConnected");
+                Log.d(TAG, "onServiceConnected");
                 IMyInterface a = (IMyInterface)service;
                 int result = a.getCount();
                 Log.e(TAG, String.valueOf(result));
@@ -67,7 +67,7 @@ public class MainActivity extends Activity {
 
             @Override
             public void onServiceDisconnected(ComponentName componentName) {
-                Log.d("baobao", "onServiceDisconnected");
+                Log.d(TAG, "onServiceDisconnected");
             }
         };
 
@@ -96,6 +96,7 @@ public class MainActivity extends Activity {
                 //binder.
 //                Toast.makeText(MainActivity.this,
 //                        "Service count: "+ binder.getCount(), Toast.LENGTH_SHORT).show();
+//                Log.i(TAG,"Service count: "+ binder.getCount());
             }
         });
     }
@@ -116,7 +117,7 @@ public class MainActivity extends Activity {
             AMSHookHelper.hookAMN();
 
         } catch (Throwable e) {
-            e.printStackTrace();
+            Log.e(TAG,Log.getStackTraceString(e));
         }
     }
 }

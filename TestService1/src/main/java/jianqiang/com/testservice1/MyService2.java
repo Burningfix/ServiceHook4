@@ -9,6 +9,7 @@ import android.util.Log;
 import com.example.jianqiang.mypluginlibrary.IMyInterface;
 
 public class MyService2 extends Service {
+    private String TAG = "sanbo.plugin.s2";
     private int count;
 
     private MyBinder binder = new MyBinder();
@@ -21,7 +22,7 @@ public class MyService2 extends Service {
 
     @Override
     public IBinder onBind(Intent intent) {
-        Log.e("jianqiang", "Service is binded");
+        Log.e(TAG, "Service is binded");
         count = count + 1;
         return binder;
     }
@@ -30,13 +31,13 @@ public class MyService2 extends Service {
     public void onCreate() {
         super.onCreate();
         count = count + 1;
-        Log.e("baobao", "Service is created");
+        Log.e(TAG, "Service is created");
     }
 
     @Override
     public boolean onUnbind(Intent intent) {
         count = count + 1;
-        Log.e("baobao", "Service is Unbind");
+        Log.e(TAG, "Service is Unbind");
         return true;
     }
 
@@ -44,6 +45,6 @@ public class MyService2 extends Service {
     public void onDestroy() {
         count = count + 1;
         super.onDestroy();
-        Log.e("baobao", "Service is Destroy");
+        Log.e(TAG, "Service is Destroy");
     }
 }

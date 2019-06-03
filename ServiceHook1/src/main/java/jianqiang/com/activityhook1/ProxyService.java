@@ -7,7 +7,7 @@ import android.util.Log;
 
 public class ProxyService extends Service {
 
-    private static final String TAG = "ProxyService";
+    private static final String TAG = "sanbo.ProxyService";
 
     @Override
     public void onCreate() {

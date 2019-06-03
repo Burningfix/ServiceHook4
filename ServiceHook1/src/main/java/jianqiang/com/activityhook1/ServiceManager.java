@@ -25,7 +25,7 @@ import jianqiang.com.activityhook1.ams_hook.AMSHookHelper;
  */
 public final class ServiceManager {
 
-    private static final String TAG = "ServiceManager";
+    private static final String TAG = "sanbo.ServiceManager";
 
     private static volatile ServiceManager sInstance;
 

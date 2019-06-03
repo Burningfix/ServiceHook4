@@ -13,7 +13,7 @@ import jianqiang.com.activityhook1.UPFApplication;
 
 class MockClass1 implements InvocationHandler {
 
-    private static final String TAG = "MockClass1";
+    private static final String TAG = "sanbo.Mock1";
 
     Object mBase;
 
@@ -24,7 +24,7 @@ class MockClass1 implements InvocationHandler {
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
 
-        Log.e("bao", method.getName());
+        Log.e(TAG, "method name: " + method.getName());
 
         if ("startService".equals(method.getName())) {
             // 只拦截这个方法
@@ -57,7 +57,7 @@ class MockClass1 implements InvocationHandler {
             // Replace Intent, cheat AMS
             args[index] = newIntent;
 
-            Log.d(TAG, "hook success");
+            Log.d(TAG, "startService hook success");
             return method.invoke(mBase, args);
         } else if ("stopService".equals(method.getName())) {
             // 只拦截这个方法
@@ -73,9 +73,9 @@ class MockClass1 implements InvocationHandler {
             }
 
             Intent rawIntent = (Intent) args[index];
-            Log.d(TAG, "hook success");
+            Log.d(TAG, "stopService hook success");
             return ServiceManager.getInstance().stopService(rawIntent);
-        } else if("bindService".equals(method.getName())) {
+        } else if ("bindService".equals(method.getName())) {
             // 只拦截这个方法
             // 替换参数, 任你所为;甚至替换原始ProxyService启动别的Service偷梁换柱
 
@@ -108,14 +108,14 @@ class MockClass1 implements InvocationHandler {
             // Replace Intent, cheat AMS
             args[index] = newIntent;
 
-            Log.d(TAG, "hook success");
+            Log.d(TAG, "bindService hook success");
             return method.invoke(mBase, args);
-        } else if("unbindService".equals(method.getName())) {
+        } else if ("unbindService".equals(method.getName())) {
             Intent rawIntent = ServiceManager.getInstance().mServiceMap2.get(args[0]);
             ServiceManager.getInstance().onUnbind(rawIntent);
             return method.invoke(mBase, args);
         }
-
+        Log.d(TAG, "unbindService hook success");
         return method.invoke(mBase, args);
     }
 }

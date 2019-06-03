@@ -13,9 +13,14 @@ public class AMSHookHelper {
             NoSuchMethodException, InvocationTargetException,
             IllegalAccessException, NoSuchFieldException {
 
-        //获取AMN的gDefault单例gDefault，gDefault是final静态的
-        Object gDefault = RefInvoke.getStaticFieldObject("android.app.ActivityManagerNative", "gDefault");
-
+        Object gDefault = null;
+        if (android.os.Build.VERSION.SDK_INT <= 25) {
+            //获取AMN的gDefault单例gDefault，gDefault是静态的
+            gDefault = RefInvoke.getStaticFieldObject("android.app.ActivityManagerNative", "gDefault");
+        } else {
+            //获取ActivityManager的单例IActivityManagerSingleton，他其实就是之前的gDefault
+            gDefault = RefInvoke.getStaticFieldObject("android.app.ActivityManager", "IActivityManagerSingleton");
+        }
         // gDefault是一个 android.util.Singleton<T>对象; 我们取出这个单例里面的mInstance字段
         Object mInstance = RefInvoke.getFieldObject("android.util.Singleton", gDefault, "mInstance");
 
@@ -23,7 +28,7 @@ public class AMSHookHelper {
         Class<?> classB2Interface = Class.forName("android.app.IActivityManager");
         Object proxy = Proxy.newProxyInstance(
                 Thread.currentThread().getContextClassLoader(),
-                new Class<?>[] { classB2Interface },
+                new Class<?>[]{classB2Interface},
                 new MockClass1(mInstance));
 
         //把gDefault的mInstance字段，修改为proxy
